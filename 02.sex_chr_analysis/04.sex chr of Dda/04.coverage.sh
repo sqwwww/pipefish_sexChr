@@ -1,0 +1,41 @@
+#!/bin/bash
+#SBATCH --job-name=coverage
+#SBATCH --partition=short
+#SBATCH -N 1
+#SBATCH --mem=10G
+#SBATCH --ntasks-per-node=4
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
+#SBATCH --time=12:00:00
+
+
+module load bedtools-2.29.2
+
+#bedtools makewindows -g ../BJ.genome.masked.chr.fa.fai -w 3000 > BJM.genome.masked.chr.fa.3k.bed
+loc_bed=BJM.genome.masked.chr.fa.10k.bed
+
+
+#samtools merge male.bam M1.bam M2.bam M3.bam M4.bam M5.bam M6.bam M7.bam M8.bam M9.bam
+#samtools index male.bam
+
+#samtools depth -aa male.bam > male_samtools.depth
+
+#awk '{print $1"\t"$2-1"\t"$2"\t"$3}' male_samtools.depth | sort -k1,1n -k2,2n > male_samtools.depth.bed
+#bedtools subtract -a male_samtools.depth.bed -b /share/home/zhou3lab/suqianwei/project/seahorse/03.repeat/ringedPipe/mask/ringedPipefish.chromosome.fasta.out.gff.bed > male_samtools_subtractRepeat.depth.bed
+#bedtools map -a $loc_bed -b male_samtools_subtractRepeat.depth.bed -c 4 -o sum,count,median,mean > male_samtools.3kwindow_Srepeat.depth 
+
+awk '$4 >= 3' male_samtools_subtractRepeat.depth.bed > male_samtools.SR.cov3.depth.bed
+bedtools map -a $loc_bed -b male_samtools.SR.cov3.depth.bed -c 4 -o count > male_samtools.10kwindow.SR.cov3.coveredSites.bed
+
+# for female depth
+#samtools merge female.bam F1.bam F2.bam F3.bam F4.bam F5.bam F6.bam F7.bam F8.bam F9.bam
+#samtools index female.bam
+#samtools depth -a female.bam > female_samtools.depth
+#awk '{print $1"\t"$2-1"\t"$2"\t"$3}' female_samtools.depth | sort -k1,1n -k2,2n > female_samtools.depth.bed
+#bedtools subtract -a female_samtools.depth.bed -b /share/home/zhou3lab/suqianwei/project/seahorse/03.repeat/ringedPipe/mask/ringedPipefish.chromosome.fasta.out.gff.bed > female_samtools_subtractRepeat.depth.bed
+#bedtools map -a $loc_bed -b female_samtools_subtractRepeat.depth.bed -c 4 -o sum,count,median,mean > female_samtools.3kwindow_Srepeat.depth
+awk '$4 >= 3' female_samtools_subtractRepeat.depth.bed > female_samtools.SR.cov3.depth.bed
+bedtools map -a $loc_bed -b female_samtools.SR.cov3.depth.bed -c 4 -o count > female_samtools.10kwindow.SR.cov3.coveredSites.bed
+
+
+
