@@ -1,0 +1,2 @@
+ls ../01.raw/CRR269*/*f1.fastq.gz | while read id ; do a=`basename $id| sed 's/_f1.fastq.gz//'`;let count+=1;echo "ln -s ../01.raw/${a}/${a}_f1.fastq.gz zbfTestis_S1_L00${count}_R1_001.fastq.gz" ;done
+ls ../01.raw/CRR269*/*f1.fastq.gz | while read id ; do a=`basename $id| sed 's/_f1.fastq.gz//'`;let count+=1;echo "ln -s ../01.raw/${a}/${a}_r2.fastq.gz zbfTestis_S1_L00${count}_R2_001.fastq.gz" ;done
