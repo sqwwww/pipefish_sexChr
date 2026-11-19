@@ -9,7 +9,7 @@ The code covers genome assembly and evaluation, sex chromosome analyses, testicu
 | Directory | Description |
 |---|---|
 | `01.genomeAssembly/` | Genome assembly and quality assessment pipelines for *Microphis brachyurus* (Mbr), *Hippichthys heptagonus* (Hhe), and *Dunckerocampus dactyliophorus* (Dda). |
-| `02.sex_chr_analysis/` | Sex chromosome analyses for Mbr, Hhe, Cin, and Dda. |
+| `02.sex_chr_analysis/` | Sex chromosome analyses for Mbr, Hhe, *Corythoichthys intestinalis* (Cin), and Dda. |
 | `03.testis_SC_analysis/` | Testicular single-cell RNA-seq analyses, including species-level processing, cross-species integration, and RNA velocity analyses. |
 | `04.GCspike_analysis/` | Calculation and visualization of GC-content enrichment near chromosome ends. |
 | `05.tissue_and_cellType_analysis/` | Comparative analyses of gonadal tissue-expression bias and testicular cell-type expression conservation and turnover, including analyses of selected sex-related genes. |
