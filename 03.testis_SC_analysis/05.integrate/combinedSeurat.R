@@ -1,3 +1,4 @@
+
 library(Seurat)
 library(tidyverse)
 
@@ -22,4 +23,14 @@ for (i in 1:length(seurat_list)) {
 
 anchors <- FindIntegrationAnchors(object.list = seurat_list,dims = 1:30, k.anchor = 3)
 integrated_data <- IntegrateData(anchorset = anchors, dims = 1:30)
-saveRDS(integrated_data, "combined_HaCinMbr13000_Zbfmo5_13000.v4.rds")
+
+data.combined <- integrated_data
+#data.combined <- NormalizeData(data.combined)
+data.combined <- FindVariableFeatures(data.combined)
+data.combined <- ScaleData(data.combined)
+data.combined <- RunPCA(data.combined)
+data.combined <- FindNeighbors(data.combined,dims = 1:30)
+data.combined <- FindClusters(data.combined, resolution = 1)
+data.combined <- RunUMAP(data.combined, dims = 1:10)
+
+saveRDS(data.combined, "combined_HaCinMbr_Zbfmo5_13000.v2.rds")
